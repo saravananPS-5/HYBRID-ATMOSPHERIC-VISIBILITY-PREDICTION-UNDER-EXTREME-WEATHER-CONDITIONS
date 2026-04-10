@@ -1,0 +1,456 @@
+/* 🌌 Dark weather background (like before) */
+body {
+  margin: 0;
+  font-family: Arial;
+  overflow-x: hidden;
+  color: white;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+}
+
+/* 🌍 Background container */
+#weather-bg {
+   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* 📍 Center content properly */
+.main-container {
+  position: relative;
+  z-index: 5;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 🧊 Glass card (bigger + centered) */
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  width: 420px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* 📅 Input */
+input {
+  display: block;
+  width: 90%;
+  padding: 12px;
+  margin: 15px auto;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+input:focus {
+  box-shadow: 0 0 10px #00c6ff;
+}
+
+/* 🔘 Button group spacing */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* 🔘 Buttons (clean single version) */
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #00c6ff, #0072ff);
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0,114,255,0.7);
+}
+
+/* 🌧️ Rain */
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #aeefff);
+  opacity: 0.6;
+  animation: rainFall linear infinite;
+  filter: blur(0.5px);
+}
+
+@keyframes rainFall {
+  0% {
+    transform: translateY(-100px) translateX(0px) rotate(15deg);
+  }
+  100% {
+    transform: translateY(100vh) translateX(20px) rotate(15deg);
+  }
+}
+
+/* ☀️ Sun */
+.sun {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #fff700, #f8b500);
+  border-radius: 50%;
+  box-shadow: 0 0 80px yellow;
+}
+
+/* ☁️ Clouds */
+
+/* CLOUD BASE */
+.cloud {
+  position: absolute;
+  left: -300px;
+  width: 120px;
+  height: 60px;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.8;
+  animation: cloudFloat linear infinite;
+  z-index: 1;
+}
+
+/* Shapes */
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 60px;
+  height: 60px;
+  top: -25px;
+  left: 10px;
+}
+
+.cloud::after {
+  width: 80px;
+  height: 80px;
+  top: -35px;
+  right: 10px;
+}
+
+
+/* Animation */
+@keyframes cloudFloat {
+  0% {
+    transform: translate(-300px, 0px);
+  }
+  50% {
+    transform: translate(50vw, 10px); /* slight float */
+  }
+  100% {
+    transform: translate(120vw, 0px);
+  }
+}
+
+/* 🌫️ Fog */
+.fog {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background: rgba(255,255,255,0.2);
+  filter: blur(10px);
+  animation: fogMove 10s infinite alternate;
+}
+
+@keyframes fogMove {
+  from { transform: translateX(-50px); }
+  to { transform: translateX(50px); }
+}
+
+/* 🌐 Page smooth transition */
+.weather-page {
+  transition: all 0.8s ease-in-out;
+}
+
+/* 🌞 SUNNY GLOW */
+.weather-page.sunny {
+  background: radial-gradient(circle at top right, #ffe57f, #4facfe);
+}
+
+/* ☁️ CLOUDY */
+.weather-page.cloudy {
+  background: linear-gradient(to top, #bdc3c7, #2c3e50);
+}
+
+/* 🌫️ FOG */
+.weather-page.fog {
+  background: linear-gradient(to top, #d7d2cc, #304352);
+}
+
+/* 🧊 GLASS CARD WITH REFLECTION */
+.weather-card {
+  position: relative;
+
+  /* 🧊 Glass base */
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(25px);
+
+  border-radius: 25px;
+  padding: 45px;
+  width: 340px;
+
+  /* 🎯 Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  text-align: center;
+
+  /* 🌑 Shadow depth */
+  box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+
+  /* ✨ Better readability */
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+
+  overflow: hidden;
+
+  transition: all 0.6s ease;
+}
+
+/* ✨ Glass reflection */
+.weather-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.2),
+    rgba(255,255,255,0)
+  );
+  transform: rotate(25deg);
+}
+
+/* 🔤 Windows-style font feel */
+/* 🌞 Icon spacing */
+.weather-icon {
+  margin-bottom: 25px; /* push label down properly */
+}
+
+/* 🏷️ Visibility label */
+.label-top {
+  margin: 0;
+  margin-bottom: 5px; /* tight with number */
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+/* 🔢 Main number */
+.visibility {
+  margin: 0;
+  margin-bottom: 8px; /* small gap below */
+  font-size: 72px;
+}
+
+/* 📊 Status */
+.status {
+  margin: 10px 0 5px 0;
+}
+
+/* 📅 Date */
+.date {
+  margin-top: 8px;
+}
+
+/* 🌞 REAL SUN */
+.weather-icon.sunny {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff176, #fbc02d);
+  box-shadow: 0 0 80px rgba(255, 200, 0, 0.9);
+}
+
+/* ☁️ CLOUD (soft realistic) */
+.weather-icon.cloudy {
+  width: 120px;
+  height: 60px;
+  background: #ffffffcc;
+  border-radius: 50px;
+  margin: auto;
+  box-shadow:
+    30px 10px 0 10px #ffffffcc,
+    60px 5px 0 5px #ffffffaa;
+}
+
+/* 🌫️ FOG LAYERS */
+.weather-icon.fog {
+  width: 120px;
+  height: 60px;
+  margin: auto;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.2)
+  );
+  filter: blur(4px);
+  animation: fogMove 4s infinite alternate;
+}
+
+@keyframes fogMove {
+  from { transform: translateX(-10px); }
+  to { transform: translateX(10px); }
+}
+
+/* 🌞 SUNNY → dark text */
+/* 🌞 SUNNY MODE FIX */
+.weather-page.sunny .weather-card {
+  background: rgba(255, 255, 255, 0.45); /* ⬅️ stronger glass */
+  color: #1a1a1a; /* ⬅️ dark text */
+  text-shadow: none; /* ⬅️ remove blur for clarity */
+}
+
+/* ☁️ CLOUDY → light text */
+.weather-page.cloudy .weather-card {
+  color: white;
+}
+
+/* 🌫️ FOG → slightly dark */
+.weather-page.fog .weather-card {
+  color: #222;
+}
+
+/* 🌞 better contrast for sunny */
+.weather-page.sunny .weather-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+}
+.weather-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.25),
+    rgba(255,255,255,0)
+  );
+  transform: rotate(25deg);
+}
+
+/* 🌐 Page Layout */
+/* 🌌 Animated background */
+.comparison-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  overflow-y: auto;
+
+  background: linear-gradient(-45deg, #1e3c72, #2a5298, #0f2027, #203a43);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+}
+
+/* Animation */
+@keyframes gradientBG {
+  0% { background-position: 0% }
+  50% { background-position: 100% }
+  100% { background-position: 0% }
+}
+
+/* Header */
+.header h1 {
+  font-size: 36px;
+}
+
+.header p {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* Chart */
+.chart-box {
+  width: 85%;
+  max-width: 1000px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+/* Cards */
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  max-width: 1100px;
+}
+
+/* Card */
+.model-card {
+  width: 230px;
+  padding: 20px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  text-align: center;
+  position: relative;
+  transition: 0.3s;
+}
+
+.model-card:hover {
+  transform: scale(1.05);
+}
+
+/* Model name */
+.model-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Metrics colors */
+.rmse { color: #ff6b6b; }
+.mae { color: #feca57; }
+.r2 { color: #1dd1a1; }
+
+/* Best highlight */
+.model-card.best {
+  border: 2px solid #1dd1a1;
+  box-shadow: 0 0 20px #1dd1a1;
+}
+
+/* Badge */
+.best-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #1dd1a1;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
